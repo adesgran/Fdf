@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_rotation.c                                  :+:      :+:    :+:   */
+/*   matrix_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 14:03:34 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/25 14:16:11 by adesgran         ###   ########.fr       */
+/*   Created: 2021/12/25 14:24:59 by adesgran          #+#    #+#             */
+/*   Updated: 2021/12/25 19:01:35 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
+
+t_coord	projection_2d(t_3dcoord p, float ratio)
+{
+	t_coord	res;
+
+	res.x = p.x * ratio + 150;
+	res.y = p.y * ratio + 200;
+	return (res);
+}
 
 void	rotate_x(t_3dcoord *p, float angle)
 {
