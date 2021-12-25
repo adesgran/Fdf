@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 13:07:20 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/24 14:08:40 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/25 14:17:27 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <libft.h>
 # include <mlx.h>
 # include <stdio.h>
+# include <math.h>
 
 typedef struct s_data {
 	void	*img;
@@ -28,6 +29,22 @@ typedef struct s_data {
 	int		endian;
 }	t_data;
 
-t_data	*window_init(void *mlx);
+typedef struct s_coord {
+	float	x;
+	float	y;
+}	t_coord;
+
+typedef struct s_3dcoord {
+	float	x;
+	float	y;
+	float	z;
+}	t_3dcoord;
+
+t_data	*window_init(void *mlx, void **mlx_win);
+void	put_pixel(t_data *img, int x, int y);
+void	put_line(t_data *img, t_coord start, t_coord end);
+void	rotate_x(t_3dcoord *p, float angle);
+void	rotate_y(t_3dcoord *p, float angle);
+void	rotate_z(t_3dcoord *p, float angle);
 
 #endif

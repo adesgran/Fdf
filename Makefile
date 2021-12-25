@@ -4,13 +4,12 @@ NAME = fdf
 LIB = libft/libft.a
 
 ### COMPILATION ###
-CC = clang 
-CFLAGS = -Wall -Wextra -Werror -lX11
+CC = gcc 
+CFLAGS = -Wall -Wextra -Werror
 
 
 ### INCLUDES ###
-CFLAGS += `pkg-config --cflags x11 xext` -lX11 -lXext
-LIBS = `pkg-config --libs x11 xext` -lX11 -lXext
+LIBS = -lXext -lX11
 
 ### SOURCES ###
 C_FILES = $(wildcard *.c)
@@ -30,23 +29,27 @@ VIOLET      = \033[1;35m
 CYAN        = \033[1;36m
 WHITE       = \033[1;37m
 
+LIBFT_REPO = https://github.com/adesgran/libft_extended.git
+
 .c.o:
 	${CC} ${CFLAGS} ${H_FILES} -c $< -o ${<:.c=.o}
 
-${LIB}:
-	make -C libft
-
 all: ${NAME}
 
+${LIB}:
+	if [ ! -d "./libft" ]; then git clone ${LIBFT_REPO} libft; fi
+	make -C libft
+
 ${NAME}: ${LIB} ${OBJ}
-	${CC} ${OBJ} ${LIBS} -L libft -lft -L/usr/local/lib -lmlx -lmlx_Linux -lm -o ${NAME}
+	${CC} ${OBJ} -L libft -lft -L/usr/local/lib -lmlx_Linux -lm ${LIBS} -o ${NAME}
 
 clean:
 	make clean -C libft
-	if [ -d "${NAME}" ]; then rm -r ${NAME}; fi
+	rm -r ${OBJ}
 
 fclean: clean
 	make fclean -C libft
+	if [ -d "${NAME}" ]; then rm -r ${NAME}; fi
 
 re: fclean all
 
