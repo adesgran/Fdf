@@ -5,7 +5,7 @@ LIB = libft/libft.a
 
 ### COMPILATION ###
 CC = gcc 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =# -Wall -Wextra -Werror
 
 
 ### INCLUDES ###
@@ -53,5 +53,5 @@ fclean: clean
 
 re: fclean all
 
-test: clean all
-	./fdf
+test: all
+	./fdf maps/42.fdf

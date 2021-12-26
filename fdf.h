@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 13:07:20 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 14:47:38 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/26 22:39:33 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define KEY_ZOOM_OUT 65453
 # define KEY_ROT_LEFT 113
 # define KEY_ROT_RIGHT 101
+
+# define DEBUG ft_printf("HERE\n");
 
 # define W_WIDTH 1000
 # define W_HEIGHT 1000
@@ -47,14 +49,16 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_coord {
-	float	x;
-	float	y;
+	float			x;
+	float			y;
+	unsigned int	color;
 }	t_coord;
 
 typedef struct s_3dcoord {
-	float	x;
-	float	y;
-	float	z;
+	float			x;
+	float			y;
+	float			z;
+	unsigned int	color;
 }	t_3dcoord;
 
 typedef struct	s_vars {
@@ -66,6 +70,10 @@ typedef struct	s_vars {
 	int			col;
 }	t_vars;
 
+typedef struct	s_node {
+	float			z;
+	unsigned int	color;
+}	t_node;
 
 t_data	*window_init(void *mlx, void **mlx_win);
 void	put_pixel(t_data *img, int x, int y, ...);
@@ -79,4 +87,7 @@ t_3dcoord	**get_3dcoord_tab(t_list *list, int len);
 t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size);
 void	put_tab(t_vars *var, t_coord **tab);
 void	print_all(t_vars *vars);
+unsigned int	set_default_color(int z);
+unsigned int	ft_atoi_hex(char *s);
+unsigned int	color_gradient(int index, int size, unsigned int c1, unsigned int c2);
 #endif

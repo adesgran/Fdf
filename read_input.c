@@ -6,15 +6,15 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:05:41 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/25 19:22:09 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/26 20:42:46 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
 
-static int	line_length(char *line)
+static size_t	line_length(char *line)
 {
-	int	i;
+	size_t	i;
 	
 	i = 0;
 	while (*line)
@@ -33,27 +33,32 @@ static int	line_length(char *line)
 	return (i);
 }
 
-static float	*parse_line(char *line, int *n_col)
+static t_node	*parse_line(char *line, int *n_col)
 {
 	int		size;
-	float	*res;
+	t_node	*res;
 	int		i;
 
 	size = line_length(line);
 	*n_col = size;
-	res = malloc(sizeof(float) * size);
+	res = malloc(sizeof(t_node) * (size + 1));
 	i = 0;
 	while (*line)
 	{
 		if (*line >= '0' && *line <= '9')
 		{
-			res[i] = (float)atoi(line);
-			i++;
+			res[i].z = (float)atoi(line);
 			while (*line <= '9' && *line >= '0')
 				line++;
+			if (*line == ',')
+			{
+				res[i].color = ft_atoi_hex(line + 1);
+				line += 9;
+			}
+			else
+				res[i].color = set_default_color(res[i].z);
+			i++;
 		}
-		if (*line == ',')
-			line += 9;
 		while (*line && (*line > '9' || *line < '0'))
 			line++;
 	}

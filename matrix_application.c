@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 18:02:31 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 14:50:58 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/26 21:20:50 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static t_coord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int ma
 		temp.x = coord[i].x;
 		temp.y = coord[i].y;
 		temp.z = coord[i].z * len / (10 * max_height);
+		temp.color = coord[i].color;
 		rotate_x(&temp, vars->img->x_ang);
 		rotate_y(&temp, vars->img->y_ang);
 		rotate_z(&temp, vars->img->z_ang);
 		res[i] = projection_2d(vars, temp,  vars->img->zoom * W_HEIGHT / (len * 1.2));
 		i++;
 	}
-	(void)max_height;
 	return (res);
 }
 	
@@ -77,7 +77,6 @@ t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 
 
 	height = tab_size(tab);
-	ft_printf("Tab_size : %d\n", tab_size(tab));
 	if (tab_size(tab) < 1)
 		return (NULL);
 	res = malloc(sizeof(t_coord *) * (height + 1));
@@ -94,5 +93,6 @@ t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 		tab++;
 		i++;
 	}
+	res[i] = NULL;
 	return (res);
 }
