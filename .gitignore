@@ -2,6 +2,7 @@
 libft/
 fdf
 maps/
+*.swp
 
 # Prerequisites
 *.d
