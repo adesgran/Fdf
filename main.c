@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:04:25 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/25 19:29:15 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:55:44 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 	res.z = z;
 	return (res);
 }
-
-static	t_coord	new_coord(float x, float y)
+*/
+/*static t_coord	new_coord(float x, float y)
 {
 	t_coord res;
 
@@ -31,6 +31,40 @@ static	t_coord	new_coord(float x, float y)
 	return (res);
 }*/
 
+int	get_key(int keycode, t_vars *vars)
+{
+	if (keycode == KEY_ESCAPE)
+		mlx_destroy_window(vars->mlx, vars->win);
+	else if(keycode == KEY_UP)
+		vars->img->x_ang += M_PI / 40;
+	else if(keycode == KEY_DOWN)
+		vars->img->x_ang -= M_PI / 40;
+	else if(keycode == KEY_LEFT)
+		vars->img->y_ang += M_PI / 40;
+	else if(keycode == KEY_RIGHT)
+		vars->img->y_ang -= M_PI / 40;
+	else if(keycode == KEY_ZOOM_IN)
+		vars->img->zoom *= 1.2;
+	else if(keycode == KEY_ZOOM_OUT)
+		vars->img->zoom /= 1.2;
+	else if(keycode == KEY_ROT_LEFT)
+		vars->img->z_ang += M_PI / 80;
+	else if(keycode == KEY_ROT_RIGHT)
+		vars->img->z_ang -= M_PI / 80;
+	else
+		ft_printf("Key : %d\n", keycode);
+	print_all(vars);
+	return (0);
+}
+
+int	close_win(int keycode, t_vars *vars)
+{
+	(void)keycode;
+	mlx_destroy_window(vars->mlx, vars->win);
+	return (0);
+}
+
+
 int	main(int ac, char **av)
 {
 	void	*mlx;
@@ -38,30 +72,27 @@ int	main(int ac, char **av)
 	t_data	*img;
 	mlx = mlx_init();
 	mlx_win = NULL;
-	img = window_init(mlx, &mlx_win)
-	;
+	img = window_init(mlx, &mlx_win);
 	int row, col;
 	if (ac == 1)
 		return (1);
 	t_list *res = read_input(av[1], &row, &col);
-	t_3dcoord **res_bis = get_3dcoord_tab(res, col);
-	t_coord **proj = matrix_application(res_bis, col);
-	ft_printf("col : %d row : %d\n",col, row);
-	for (int i = 0; i < col; i++)
-	{
-		for (int j = 0; j < row; j++)
-		{
-			if (i != col - 1)
-				put_line(img, proj[j][i], proj[j][i + 1]);
-			if (j != row - 1)
-				put_line(img, proj[j][i], proj[j + 1][i]);
-		}
-	}
-	printf("END\n");
-	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
-	mlx_loop(mlx);
-	(void)mlx_win;
-	ft_printf("HERE\n");
+	t_3dcoord **tab = get_3dcoord_tab(res, col);
+	
+	t_vars *vars;
+	vars = malloc(sizeof(t_vars));
+	vars->mlx = mlx;
+	vars->img = img;
+	vars->win = mlx_win;
+	vars->tab = tab;
+	vars->col = col;
+	vars->row = row;
+
+	print_all(vars);
+	
+	mlx_hook(vars->win, 2, 1L<<0, get_key, vars);
+
+	mlx_loop(vars->mlx);
 	
 	return (0);
 }

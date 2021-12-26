@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   print_all.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 11:27:11 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 13:22:57 by adesgran         ###   ########.fr       */
+/*   Created: 2021/12/26 13:54:08 by adesgran          #+#    #+#             */
+/*   Updated: 2021/12/26 14:14:32 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
 
-void	put_pixel(t_data *img, int x, int y, ...)
+void	print_all(t_vars *vars)
 {
-	va_list	args;
-	char	*dst;
-	
-	va_start(args, y);
-	if (x < 0 || y < 0)
+	t_coord		**temp;
+	t_coord		**proj_tab;
+
+	proj_tab = matrix_application(vars, vars->tab, vars->col);
+	if (!proj_tab)
 		return ;
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int *)dst = va_arg(args, unsigned int);
-	if (!*dst)
-		*(unsigned int *)dst = 0x00000000;
+	put_tab(vars, proj_tab);
+	temp = proj_tab;
+	while (*temp)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(proj_tab);
 }

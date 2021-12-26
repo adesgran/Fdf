@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 18:02:31 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/25 19:35:28 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/26 14:50:58 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	tab_size(t_3dcoord **tab)
 	return (i);
 }
 
-static t_coord	*transform_matrix(t_3dcoord *coord, int len, int max_height)
+static t_coord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int max_height)
 {
 	int			i;
 	t_coord		*res;
@@ -37,10 +37,10 @@ static t_coord	*transform_matrix(t_3dcoord *coord, int len, int max_height)
 		temp.x = coord[i].x;
 		temp.y = coord[i].y;
 		temp.z = coord[i].z * len / (10 * max_height);
-		rotate_x(&temp, M_PI / 3);
-		rotate_y(&temp, -M_PI / 13);
-		rotate_z(&temp, 0);
-		res[i] = projection_2d(temp, W_HEIGHT / (len * 1.2));
+		rotate_x(&temp, vars->img->x_ang);
+		rotate_y(&temp, vars->img->y_ang);
+		rotate_z(&temp, vars->img->z_ang);
+		res[i] = projection_2d(vars, temp,  vars->img->zoom * W_HEIGHT / (len * 1.2));
 		i++;
 	}
 	(void)max_height;
@@ -67,17 +67,20 @@ static int	get_max_height(t_3dcoord **tab, int size)
 	return (res);
 }
 
-t_coord	**matrix_application(t_3dcoord **tab, int size)
+t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 {
 	int			i;
 	int			max_height;
 	t_coord		**res;
 	t_3dcoord	*temp;
+	int			height;
 
+
+	height = tab_size(tab);
 	ft_printf("Tab_size : %d\n", tab_size(tab));
 	if (tab_size(tab) < 1)
 		return (NULL);
-	res = malloc(sizeof(t_coord *) * (tab_size(tab) + 1));
+	res = malloc(sizeof(t_coord *) * (height + 1));
 	if (!res)
 		return (NULL);
 	max_height = get_max_height(tab, size);
@@ -85,7 +88,7 @@ t_coord	**matrix_application(t_3dcoord **tab, int size)
 	while (*tab)
 	{
 		temp = *tab;
-		res[i] = transform_matrix(temp, size, max_height);
+		res[i] = transform_matrix(vars, temp, size, max_height);
 		if (!res[i])
 			return (NULL);
 		tab++;

@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 11:45:00 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/25 19:25:58 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/26 13:22:13 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	put_line(t_data *img, t_coord start, t_coord end)
 	origin = get_origin(start, coeff);
 	while (x - end.x >= 0.5 || x - end.x < -0.5)
 	{
-		put_pixel(img, (int)(x), (int)(0.5 + origin + coeff * x));
+		put_pixel(img, (int)(x), (int)(0.5 + origin + coeff * x), 2805513);
 		x += increment;
 	}
 	while (y - end.y >= 0.5 || y - end.y < -0.5)
 	{
-		put_pixel(img, (int)(0.5 + ((y - origin) / coeff)), y);
+		put_pixel(img, (int)(0.5 + ((y - origin) / coeff)), y, 2805513);
 		if (start.y > end.y)
 			y -= 1;
 		else
