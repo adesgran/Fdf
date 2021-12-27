@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 13:07:20 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 22:39:33 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:16:51 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ typedef struct s_coord {
 	unsigned int	color;
 }	t_coord;
 
+typedef struct	s_node {
+	float			z;
+	unsigned int	color;
+}	t_node;
+
 typedef struct s_3dcoord {
 	float			x;
 	float			y;
@@ -70,24 +75,21 @@ typedef struct	s_vars {
 	int			col;
 }	t_vars;
 
-typedef struct	s_node {
-	float			z;
-	unsigned int	color;
-}	t_node;
-
-t_data	*window_init(void *mlx, void **mlx_win);
-void	put_pixel(t_data *img, int x, int y, ...);
-void	put_line(t_data *img, t_coord start, t_coord end);
-void	rotate_x(t_3dcoord *p, float angle);
-void	rotate_y(t_3dcoord *p, float angle);
-void	rotate_z(t_3dcoord *p, float angle);
-t_coord	projection_2d(t_vars *vars, t_3dcoord p, float ratio);
-t_list	*read_input(char *filename, int *n_line, int *n_col);
-t_3dcoord	**get_3dcoord_tab(t_list *list, int len);
-t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size);
-void	put_tab(t_vars *var, t_coord **tab);
-void	print_all(t_vars *vars);
+t_data			*window_init(void *mlx, void **mlx_win);
+void			put_pixel(t_data *img, int x, int y, ...);
+void			add_pixel(t_node **tab, t_3dcoord curr);
+void			add_line(t_node **tab, t_3dcoord start, t_3dcoord end);
+void			rotate_x(t_3dcoord *p, float angle);
+void			rotate_y(t_3dcoord *p, float angle);
+void			rotate_z(t_3dcoord *p, float angle);
+t_3dcoord		projection_2d(t_vars *vars, t_3dcoord p, float ratio);
+t_list			*read_input(char *filename, int *n_line, int *n_col);
+t_3dcoord		**get_3dcoord_tab(t_list *list, int len);
+t_3dcoord		**matrix_application(t_vars *vars, t_3dcoord **tab, int size);
+void			put_tab(t_vars *var, t_3dcoord **tab);
+void			print_all(t_vars *vars);
 unsigned int	set_default_color(int z);
 unsigned int	ft_atoi_hex(char *s);
 unsigned int	color_gradient(int index, int size, unsigned int c1, unsigned int c2);
+
 #endif

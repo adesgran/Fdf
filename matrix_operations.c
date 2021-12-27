@@ -6,20 +6,19 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:24:59 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 21:46:40 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:00:59 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
 
-t_coord	projection_2d(t_vars *vars, t_3dcoord p, float ratio)
+t_3dcoord	projection_2d(t_vars *vars, t_3dcoord p, float ratio)
 {
-	t_coord	res;
+	t_3dcoord	res;
 
-	//printf("x=%f y=%f z=%f\n", vars->img->x_ang, vars->img->y_ang, vars->img->z_ang);
-	//printf("p.x=%f p.y=%f");
 	res.x = p.x * ratio + 0.5 * (W_WIDTH - (cos(vars->img->y_ang) * ratio * ((float)vars->col - 1)));
 	res.y = p.y * ratio + 0.5 * (W_HEIGHT - (cos(vars->img->x_ang) * ratio * ((float)vars->row - 1)));
+	res.z = p.z;
 	res.color = p.color;
 	return (res);
 }

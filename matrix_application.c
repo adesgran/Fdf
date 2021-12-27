@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 18:02:31 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 21:20:50 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:05:29 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static int	tab_size(t_3dcoord **tab)
 	return (i);
 }
 
-static t_coord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int max_height)
+static t_3dcoord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int max_height)
 {
 	int			i;
-	t_coord		*res;
+	t_3dcoord	*res;
 	t_3dcoord	temp;
 
-	res = malloc(sizeof(t_coord) * len);
+	res = malloc(sizeof(t_3dcoord) * len);
 	if (!res)
 		return (res);
 	i = 0;
@@ -67,11 +67,11 @@ static int	get_max_height(t_3dcoord **tab, int size)
 	return (res);
 }
 
-t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
+t_3dcoord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 {
 	int			i;
 	int			max_height;
-	t_coord		**res;
+	t_3dcoord	**res;
 	t_3dcoord	*temp;
 	int			height;
 
@@ -79,18 +79,17 @@ t_coord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 	height = tab_size(tab);
 	if (tab_size(tab) < 1)
 		return (NULL);
-	res = malloc(sizeof(t_coord *) * (height + 1));
+	res = malloc(sizeof(t_3dcoord *) * (height + 1));
 	if (!res)
 		return (NULL);
 	max_height = get_max_height(tab, size);
 	i = 0;
-	while (*tab)
+	while (tab[i])
 	{
-		temp = *tab;
+		temp = tab[i];
 		res[i] = transform_matrix(vars, temp, size, max_height);
 		if (!res[i])
 			return (NULL);
-		tab++;
 		i++;
 	}
 	res[i] = NULL;

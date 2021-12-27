@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 13:54:08 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 23:19:37 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:02:36 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ static void	check_values(t_data *img)
 
 void	print_all(t_vars *vars)
 {
-	t_coord		**temp;
-	t_coord		**proj_tab;
+	t_3dcoord	**temp;
+	t_3dcoord	**proj_tab;
 
 	check_values(vars->img);
 	proj_tab = matrix_application(vars, vars->tab, vars->col);
 	if (!proj_tab)
 		return ;
-	
 	put_tab(vars, proj_tab);
 	temp = proj_tab;
 	while (*temp)
