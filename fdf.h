@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 13:07:20 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 16:16:51 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:58:31 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,14 @@ typedef struct s_coord {
 	unsigned int	color;
 }	t_coord;
 
-typedef struct	s_node {
+typedef struct s_node {
 	float			z;
 	unsigned int	color;
 }	t_node;
+
+typedef struct s_nodelist {
+	t_node	*node;
+}	t_nodelist;
 
 typedef struct s_3dcoord {
 	float			x;

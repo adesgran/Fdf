@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 12:40:56 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 17:17:05 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:01:48 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,18 @@ static void	free_tab(t_node **tab)
 
 static t_node	**init_tab(void)
 {
-	t_node	**tab;
+	struct s_node	**tab;
 	t_node	*temp;
 	int		i;
 	int		j;
 
-	tab = malloc(sizeof(t_node *) * W_HEIGHT);
+	tab = (t_node **)malloc(sizeof(*tab) * (long int)W_HEIGHT);
 	if (!tab)
 		return (NULL);
 	i = 0;
 	while (i < W_HEIGHT)
 	{
-		ft_printf("i=%d width=%d\n", i, W_WIDTH);
-		temp = malloc(sizeof(t_node) * (W_WIDTH - 1));
-		DEBUG
+		temp = (t_node *)malloc(sizeof(**tab) * (W_WIDTH));
 		tab[i] = temp;
 		if (!tab[i])
 		{
@@ -51,10 +49,11 @@ static t_node	**init_tab(void)
 		j = 0;
 		while (j < W_WIDTH)
 		{
-			tab[i][j].z = -2000000000;
-			tab[i][j].color = 0;
+			tab[i][j].z = -2000;
+			tab[i][j].color = 0x00222222;
 			j++;
 		}
+		temp = NULL;
 		i++;
 	}
 	tab[i] = NULL;
@@ -94,7 +93,6 @@ void	put_tab(t_vars *vars, t_3dcoord **tab)
 		i = 0;
 		while (i < vars->col)
 		{
-			printf("i=%d j=%d\n", i, j);
 			if (i != vars->col - 1)
 				add_line(curr_tab, tab[j][i], tab[j][i + 1]);
 			if (j != vars->row - 1)
