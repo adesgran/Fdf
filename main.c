@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:04:25 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 15:45:24 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/29 18:30:19 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 	res.y = y;
 	return (res);
 }*/
+
+int	update_win(t_vars *vars)
+{
+	print_all(vars);
+	return (0);
+}
 
 int	get_key(int keycode, t_vars *vars)
 {
@@ -93,6 +99,7 @@ int	main(int ac, char **av)
 	print_all(vars);
 	mlx_hook(vars->win, 2, 1L<<0, get_key, vars);
 
+	mlx_loop_hook(vars->mlx, update_win, vars);
 	mlx_loop(vars->mlx);
 	(void)ac;	
 	return (0);

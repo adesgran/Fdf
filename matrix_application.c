@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 18:02:31 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 20:24:29 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/29 18:42:39 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static t_3dcoord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int 
 	i = 0;
 	while (i < len)
 	{
-		temp.x = coord[i].x;
-		temp.y = coord[i].y;
-		temp.z = coord[i].z * len / (10 * max_height);
+		temp.x = coord[i].x - ((float)len / 2);
+		temp.y = coord[i].y - ((float)max_height / 2);
+		temp.z = (coord[i].z + 5) * len / (10 * max_height);
 		temp.color = coord[i].color;
-		rotate_x(&temp, vars->img->x_ang);
 		rotate_y(&temp, vars->img->y_ang);
+		rotate_x(&temp, vars->img->x_ang);
 		rotate_z(&temp, vars->img->z_ang);
 		res[i] = projection_2d(vars, temp,  vars->img->zoom * W_HEIGHT / (len * 1.2));
 		i++;

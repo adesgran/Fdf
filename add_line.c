@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 11:45:00 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 19:45:03 by adesgran         ###   ########.fr       */
+/*   Updated: 2021/12/29 18:42:39 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	add_line(t_node **tab, t_3dcoord start, t_3dcoord end)
 		put_y(start, end, tab);
 	if (end.x == start.x && end.y == start.y)
 	{
-		if (tab[(int)start.y][(int)start.x].z < start.z)
+		if (tab[(int)roundf(start.y)][(int)roundf(start.x)].z < start.z)
 		{
-			tab[(int)start.y][(int)start.x].z = start.z;
-			tab[(int)start.y][(int)start.x].color = start.color;
+			tab[(int)roundf(start.y)][(int)roundf(start.x)].z = start.z;
+			tab[(int)roundf(start.y)][(int)roundf(start.x)].color = start.color;
 		}
 	}
 }
