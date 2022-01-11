@@ -2,6 +2,7 @@
 NAME = fdf
 
 LIB = libft/libft.a
+MLX = minilibx-linux/mlx.a
 
 ### COMPILATION ###
 CC = gcc 
@@ -13,7 +14,7 @@ LIBS = -lXext -lX11
 
 ### SOURCES ###
 C_FILES = $(wildcard *.c)
-H_FILES = -I . -I libft
+H_FILES = -I . -I libft -I minilibx-linux
 OBJ = ${C_FILES:.c=.o} 
 
 ### COLORS ###
@@ -40,8 +41,11 @@ ${LIB}:
 	if [ ! -d "./libft" ]; then git clone ${LIBFT_REPO} libft; fi
 	make -C libft
 
-${NAME}: ${LIB} ${OBJ}
-	${CC} ${OBJ} -L libft -lft -L/usr/local/lib -lmlx_Linux -lm ${LIBS} -o ${NAME}
+${MLX}:
+	make -C minilibx-linux
+
+${NAME}: ${LIB} ${MLX} ${OBJ}
+	${CC} ${OBJ} -L libft -lft -L minilibx-linux -lmlx_Linux -lm ${LIBS} -o ${NAME}
 
 clean:
 	make clean -C libft
