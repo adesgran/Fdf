@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 13:07:20 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 17:58:31 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:01:10 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define FDF_H
 
 # define KEY_UP 119
-# define KEY_LEFT 97
+# define KEY_LEFT 100
 # define KEY_DOWN 115
-# define KEY_RIGHT 100
+# define KEY_RIGHT 97
 # define KEY_ESCAPE 65307
 # define KEY_ZOOM_IN 65451
 # define KEY_ZOOM_OUT 65453
@@ -95,5 +95,7 @@ void			print_all(t_vars *vars);
 unsigned int	set_default_color(int z);
 unsigned int	ft_atoi_hex(char *s);
 unsigned int	color_gradient(int index, int size, unsigned int c1, unsigned int c2);
+void	*free_vars(t_vars *vars);
+void	*free_tab(t_vars *vars);
 
 #endif

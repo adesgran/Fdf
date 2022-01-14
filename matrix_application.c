@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 18:02:31 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/29 18:42:39 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:15:32 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ static int	tab_size(t_3dcoord **tab)
 	return (i);
 }
 
-static t_3dcoord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int max_height)
+static t_3dcoord	*trans_mat(t_vars *vars, t_3dcoord *coord, int len, int max)
 {
 	int			i;
+	float		zoom;
 	t_3dcoord	*res;
 	t_3dcoord	temp;
 
@@ -32,21 +33,22 @@ static t_3dcoord	*transform_matrix(t_vars *vars, t_3dcoord *coord, int len, int 
 	if (!res)
 		return (res);
 	i = 0;
+	zoom = vars->img->zoom;
 	while (i < len)
 	{
 		temp.x = coord[i].x - ((float)len / 2);
-		temp.y = coord[i].y - ((float)max_height / 2);
-		temp.z = (coord[i].z + 5) * len / (10 * max_height);
+		temp.y = coord[i].y - ((float)max / 2);
+		temp.z = (coord[i].z + 5) * len / (10 * max);
 		temp.color = coord[i].color;
 		rotate_y(&temp, vars->img->y_ang);
 		rotate_x(&temp, vars->img->x_ang);
 		rotate_z(&temp, vars->img->z_ang);
-		res[i] = projection_2d(vars, temp,  vars->img->zoom * W_HEIGHT / (len * 1.2));
+		res[i] = projection_2d(vars, temp, zoom * W_HEIGHT / (len * 1.2));
 		i++;
 	}
 	return (res);
 }
-	
+
 static int	get_max_height(t_3dcoord **tab, int size)
 {
 	int	res;
@@ -75,7 +77,6 @@ t_3dcoord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 	t_3dcoord	*temp;
 	int			height;
 
-
 	height = tab_size(tab);
 	if (tab_size(tab) < 1)
 		return (NULL);
@@ -87,7 +88,7 @@ t_3dcoord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 	while (tab[i])
 	{
 		temp = tab[i];
-		res[i] = transform_matrix(vars, temp, size, max_height);
+		res[i] = trans_mat(vars, temp, size, max_height);
 		if (!res[i])
 			return (NULL);
 		i++;

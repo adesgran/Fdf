@@ -40,19 +40,20 @@ all: ${NAME}
 ${LIB}:
 	if [ ! -d "./libft" ]; then git clone ${LIBFT_REPO} libft; fi
 	make -C libft
+	make clean -C libft
 
 ${MLX}:
+	git submodule init
+	git submodule update
 	make -C minilibx-linux
 
 ${NAME}: ${LIB} ${MLX} ${OBJ}
 	${CC} ${OBJ} -L libft -lft -L minilibx-linux -lmlx_Linux -lm ${LIBS} -o ${NAME}
 
 clean:
-	make clean -C libft
 	rm -r ${OBJ}
 
 fclean: clean
-	make fclean -C libft
 	if [ -d "${NAME}" ]; then rm -r ${NAME}; fi
 
 re: fclean all

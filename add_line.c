@@ -6,13 +6,14 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 11:45:00 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/29 18:42:39 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:31:32 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
 
-static unsigned int	get_color(int index, int size, unsigned int color1, unsigned int color2)
+static unsigned int	get_color(int index, int size, \
+		unsigned int color1, unsigned int color2)
 {
 	unsigned int	res;
 
@@ -44,7 +45,8 @@ static void	put_x(t_3dcoord start, t_3dcoord end, t_node **tab)
 	{
 		curr.y = origin + coeff * curr.x;
 		curr.z = start.z + sign * (curr.x * start.z / start.x);
-		curr.color = get_color(abs((int)curr.x - (int)start.x), (int)len, start.color, end.color);
+		curr.color = get_color(abs((int)curr.x - (int)start.x), \
+				(int)len, start.color, end.color);
 		add_pixel(tab, curr);
 		curr.x += sign;
 	}
@@ -72,7 +74,8 @@ static void	put_y(t_3dcoord start, t_3dcoord end, t_node **tab)
 	{
 		curr.x = (curr.y - origin) / coeff;
 		curr.z = start.z + sign * (curr.y * start.z / start.y);
-		curr.color = get_color(abs((int)curr.y - (int)start.y), (int)len, start.color, end.color);
+		curr.color = get_color(abs((int)curr.y - (int)start.y), \
+				(int)len, start.color, end.color);
 		add_pixel(tab, curr);
 		curr.y += sign;
 	}

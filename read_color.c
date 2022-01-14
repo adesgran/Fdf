@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 18:34:11 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/29 16:28:13 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:25:39 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ unsigned int	set_default_color(int z)
 		return (0x00FF5500);
 	return (0);
 }
-

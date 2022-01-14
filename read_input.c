@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:05:41 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 20:42:46 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:41:18 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static size_t	line_length(char *line)
 {
 	size_t	i;
-	
+
 	i = 0;
 	while (*line)
 	{
@@ -33,6 +33,27 @@ static size_t	line_length(char *line)
 	return (i);
 }
 
+static char	*read_line(char *line, t_node *res, int *i)
+{
+	if (*line >= '0' && *line <= '9')
+	{
+		res[*i].z = (float)atoi(line);
+		while (*line <= '9' && *line >= '0')
+			line++;
+		if (*line == ',')
+		{
+			res[*i].color = ft_atoi_hex(line + 1);
+			line += 9;
+		}
+		else
+			res[*i].color = set_default_color(res[*i].z);
+		*i += 1;
+	}
+	while (*line && (*line > '9' || *line < '0'))
+		line++;
+	return (line);
+}
+
 static t_node	*parse_line(char *line, int *n_col)
 {
 	int		size;
@@ -45,27 +66,10 @@ static t_node	*parse_line(char *line, int *n_col)
 	i = 0;
 	while (*line)
 	{
-		if (*line >= '0' && *line <= '9')
-		{
-			res[i].z = (float)atoi(line);
-			while (*line <= '9' && *line >= '0')
-				line++;
-			if (*line == ',')
-			{
-				res[i].color = ft_atoi_hex(line + 1);
-				line += 9;
-			}
-			else
-				res[i].color = set_default_color(res[i].z);
-			i++;
-		}
-		while (*line && (*line > '9' || *line < '0'))
-			line++;
+		line = read_line(line, res, &i);
 	}
 	return (res);
 }
-
-
 
 static t_list	*read_file(char *filename, int *n_col)
 {

@@ -6,13 +6,13 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 22:22:57 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/27 13:11:34 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 11:05:24 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
 
-static unsigned int gradient_r(int i, int s, unsigned int c1, unsigned int c2)
+static unsigned int	gradient_r(int i, int s, unsigned int c1, unsigned int c2)
 {
 	unsigned int	r1;
 	unsigned int	r2;
@@ -29,7 +29,7 @@ static unsigned int gradient_r(int i, int s, unsigned int c1, unsigned int c2)
 	return (res);
 }
 
-static unsigned int gradient_g(int i, int s, unsigned int c1, unsigned int c2)
+static unsigned int	gradient_g(int i, int s, unsigned int c1, unsigned int c2)
 {
 	unsigned int	g1;
 	unsigned int	g2;
@@ -46,7 +46,7 @@ static unsigned int gradient_g(int i, int s, unsigned int c1, unsigned int c2)
 	return (res);
 }
 
-static unsigned int gradient_b(int i, int s, unsigned int c1, unsigned int c2)
+static unsigned int	gradient_b(int i, int s, unsigned int c1, unsigned int c2)
 {
 	unsigned int	b1;
 	unsigned int	b2;
@@ -63,12 +63,12 @@ static unsigned int gradient_b(int i, int s, unsigned int c1, unsigned int c2)
 	return (res);
 }
 
-unsigned int	color_gradient(int index, int size, unsigned int c1, unsigned int c2)
+unsigned int	color_gradient(int i, int s, unsigned int c1, unsigned int c2)
 {
 	unsigned int	res;
 
-	res = gradient_b(index, size, c1, c2);
-	res += gradient_g(index, size, c1, c2) * (unsigned int)pow(16, 2);
-	res += gradient_r(index, size, c1, c2) * (unsigned int)pow(16, 4);
+	res = gradient_b(i, s, c1, c2);
+	res += gradient_g(i, s, c1, c2) * (unsigned int)pow(16, 2);
+	res += gradient_r(i, s, c1, c2) * (unsigned int)pow(16, 4);
 	return (res);
 }
