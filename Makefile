@@ -60,3 +60,5 @@ re: fclean all
 
 test: all
 	./fdf maps/42.fdf
+
+.PHONY: all clean fclean re test
