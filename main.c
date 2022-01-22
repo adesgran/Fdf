@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:04:25 by adesgran          #+#    #+#             */
-/*   Updated: 2022/01/22 13:57:00 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/22 22:31:00 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,6 @@ static t_vars	*init_vars(char **av)
 	vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
-	vars->mlx = mlx_init();
-	vars->win = NULL;
-	vars->img = window_init(vars->mlx, &vars->win);
-	vars->col = 0;
-	vars->row = 0;
 	list = read_input(*av, &vars->row, &vars->col);
 	if (list)
 		vars->tab = get_3dcoord_tab(list, vars->col);
@@ -68,7 +63,13 @@ static t_vars	*init_vars(char **av)
 		mlx_destroy_window(vars->mlx, vars->win);
 		free(vars);
 		vars = NULL;
+		return (vars);
 	}
+	vars->mlx = mlx_init();
+	vars->win = NULL;
+	vars->img = window_init(vars->mlx, &vars->win);
+	vars->col = 0;
+	vars->row = 0;
 	return (vars);
 }
 
