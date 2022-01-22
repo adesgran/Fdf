@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 13:07:20 by adesgran          #+#    #+#             */
-/*   Updated: 2022/01/14 11:01:10 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:27:29 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 # define KEY_ZOOM_OUT 65453
 # define KEY_ROT_LEFT 113
 # define KEY_ROT_RIGHT 101
-
-# define DEBUG ft_printf("HERE\n");
-
 # define W_WIDTH 1000
 # define W_HEIGHT 1000
 
@@ -70,7 +67,7 @@ typedef struct s_3dcoord {
 	unsigned int	color;
 }	t_3dcoord;
 
-typedef struct	s_vars {
+typedef struct s_vars {
 	void		*mlx;
 	void		*win;
 	t_data		*img;
@@ -94,8 +91,9 @@ void			put_tab(t_vars *var, t_3dcoord **tab);
 void			print_all(t_vars *vars);
 unsigned int	set_default_color(int z);
 unsigned int	ft_atoi_hex(char *s);
-unsigned int	color_gradient(int index, int size, unsigned int c1, unsigned int c2);
-void	*free_vars(t_vars *vars);
-void	*free_tab(t_vars *vars);
+unsigned int	color_gradient(int index, int size, \
+		unsigned int c1, unsigned int c2);
+void			*free_vars(t_vars *vars);
+void			*free_tab(t_vars *vars);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:04:25 by adesgran          #+#    #+#             */
-/*   Updated: 2022/01/22 10:12:38 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/22 13:57:00 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_key(int keycode, t_vars *vars)
 {
 	if (keycode == KEY_ESCAPE)
 	{
-		mlx_destroy_window(vars->mlx, vars->win);
+		free_vars(vars);
 		return (0);
 	}
 	else if (keycode == KEY_UP)
@@ -44,13 +44,6 @@ int	get_key(int keycode, t_vars *vars)
 	else
 		ft_printf("Key : %d\n", keycode);
 	print_all(vars);
-	return (0);
-}
-
-int	close_win(int keycode, t_vars *vars)
-{
-	(void)keycode;
-	mlx_destroy_window(vars->mlx, vars->win);
 	return (0);
 }
 
@@ -96,7 +89,12 @@ int	main(int ac, char **av)
 	}
 	print_all(vars);
 	mlx_hook(vars->win, 2, 1L << 0, get_key, vars);
-	mlx_loop_hook(vars->mlx, update_win, vars);
 	mlx_loop(vars->mlx);
+	mlx_destroy_image(vars->mlx, vars->img->img);
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
+	free(vars->img);
+	free(vars);
 	return (0);
 }

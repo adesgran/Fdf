@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 17:26:37 by adesgran          #+#    #+#             */
-/*   Updated: 2021/12/26 21:57:57 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/22 13:40:45 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_3dcoord	**get_3dcoord_tab(t_list *list, int len)
 	int			i;
 	t_list		*temp;
 
-	res = malloc(sizeof(t_3dcoord *) * (ft_lstsize(list)));
+	res = malloc(sizeof(t_3dcoord *) * (ft_lstsize(list) + 1));
 	if (!res)
 		return (res);
 	i = 0;

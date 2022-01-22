@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 18:02:31 by adesgran          #+#    #+#             */
-/*   Updated: 2022/01/14 11:15:32 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/22 14:44:17 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	tab_size(t_3dcoord **tab)
 	return (i);
 }
 
-static t_3dcoord	*trans_mat(t_vars *vars, t_3dcoord *coord, int len, int max)
+static t_3dcoord	*trans_mat(t_vars *vars, t_3dcoord *coord, int len, int amp)
 {
 	int			i;
 	float		zoom;
@@ -36,12 +36,12 @@ static t_3dcoord	*trans_mat(t_vars *vars, t_3dcoord *coord, int len, int max)
 	zoom = vars->img->zoom;
 	while (i < len)
 	{
-		temp.x = coord[i].x - ((float)len / 2);
-		temp.y = coord[i].y - ((float)max / 2);
-		temp.z = (coord[i].z + 5) * len / (10 * max);
+		temp.x = coord[i].x - ((float)vars->col / 2);
+		temp.y = coord[i].y - ((float)vars->row / 2);
+		temp.z = coord[i].z * len / (10 * amp);
 		temp.color = coord[i].color;
-		rotate_y(&temp, vars->img->y_ang);
 		rotate_x(&temp, vars->img->x_ang);
+		rotate_y(&temp, vars->img->y_ang);
 		rotate_z(&temp, vars->img->z_ang);
 		res[i] = projection_2d(vars, temp, zoom * W_HEIGHT / (len * 1.2));
 		i++;
@@ -49,30 +49,36 @@ static t_3dcoord	*trans_mat(t_vars *vars, t_3dcoord *coord, int len, int max)
 	return (res);
 }
 
-static int	get_max_height(t_3dcoord **tab, int size)
+static int	get_ampl(t_3dcoord **tab, int size)
 {
-	int	res;
+	int	max;
+	int	min;
 	int	i;
 
-	res = tab[0]->z;
+	max = tab[0]->z;
+	min = max;
 	while (*tab)
 	{
 		i = 0;
 		while (i < size)
 		{
-			if (tab[0][i].z > res)
-				res = tab[0][i].z;
+			if (tab[0][i].z > max)
+				max = tab[0][i].z;
+			if (tab[0][i].z < min)
+				min = tab[0][i].z;
 			i++;
 		}
 		tab++;
 	}
-	return (res);
+	if (max == min)
+		return (1);
+	return (max - min);
 }
 
 t_3dcoord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 {
 	int			i;
-	int			max_height;
+	int			amplitude;
 	t_3dcoord	**res;
 	t_3dcoord	*temp;
 	int			height;
@@ -83,12 +89,12 @@ t_3dcoord	**matrix_application(t_vars *vars, t_3dcoord **tab, int size)
 	res = malloc(sizeof(t_3dcoord *) * (height + 1));
 	if (!res)
 		return (NULL);
-	max_height = get_max_height(tab, size);
+	amplitude = get_ampl(tab, size);
 	i = 0;
 	while (tab[i])
 	{
 		temp = tab[i];
-		res[i] = trans_mat(vars, temp, size, max_height);
+		res[i] = trans_mat(vars, temp, size, amplitude);
 		if (!res[i])
 			return (NULL);
 		i++;

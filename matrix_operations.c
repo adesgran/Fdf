@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 14:24:59 by adesgran          #+#    #+#             */
-/*   Updated: 2022/01/14 11:11:24 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/22 14:08:32 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_3dcoord	projection_2d(t_vars *vars, t_3dcoord p, float ratio)
 {
 	t_3dcoord	res;
 
-	res.x = (p.x * ratio) + (W_WIDTH / 2);
-	res.y = (p.y * ratio) + (W_HEIGHT / 2);
+	res.x = (p.x * ratio) + W_WIDTH / 2;
+	res.y = (p.y * ratio) + W_HEIGHT / 2;
 	(void)vars;
 	res.z = p.z;
 	res.color = p.color;

@@ -6,7 +6,7 @@
 /*   By: adesgran <adesgran@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 12:40:56 by adesgran          #+#    #+#             */
-/*   Updated: 2022/01/14 11:25:21 by adesgran         ###   ########.fr       */
+/*   Updated: 2022/01/22 12:58:01 by adesgran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static t_node	**init_tab(void)
 	int				i;
 	int				j;
 
-	tab = (t_node **)malloc(sizeof(*tab) * (long int)W_HEIGHT);
+	tab = (t_node **)malloc(sizeof(*tab) * ((long int)W_HEIGHT + 1));
 	if (!tab)
 		return (NULL);
 	i = -1;
 	while (++i < W_HEIGHT)
 	{
-		temp = (t_node *)malloc(sizeof(**tab) * (W_WIDTH));
+		temp = (t_node *)malloc(sizeof(**tab) * (W_WIDTH + 1));
 		tab[i] = temp;
 		if (!tab[i])
 			return (free_node_tab(tab));
@@ -82,6 +82,8 @@ void	put_tab(t_vars *vars, t_3dcoord **tab)
 	int		j;
 
 	curr_tab = init_tab();
+	if (!curr_tab)
+		return ;
 	j = 0;
 	while (j < vars->row)
 	{
